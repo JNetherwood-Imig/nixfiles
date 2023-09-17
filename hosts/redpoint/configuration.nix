@@ -62,7 +62,7 @@
   # Hyprland
   programs.hyprland = {
     enable = true;
-    nvidiaPatches = true;
+    enableNvidiaPatches = true;
     xwayland.enable = true;
   };
 
@@ -140,7 +140,7 @@
     xwayland
   ];
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
 
