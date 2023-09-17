@@ -42,16 +42,18 @@
     LC_TIME = "en_US.UTF-8";
   };
 
+  programs.regreet.enable = true;
+
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
     layout = "us";
     videoDrivers = [ "nvidia" ];
-    desktopManager.budgie.enable = true;
-    displayManager.gdm = {
-        enable = true;
-        wayland = true;
-    };
+    # desktopManager.budgie.enable = true;
+    # displayManager.gdm = {
+        # enable = true;
+        # wayland = true;
+    # };
   };
 
   hardware = {
@@ -90,12 +92,6 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.jackson = {
-    isNormalUser = true;
-    description = "Jackson Netherwood-Imig";
-    extraGroups = [ "networkmanager" "wheel" ];
-    shell = pkgs.zsh;
-  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -105,7 +101,8 @@
     shellAliases = {
       la = "ls -a";
       update = "sudo nixos-rebuild switch";
-      config = "sudoedit /etc/nixos/configuration.nix";
+      syscfg = "nvim ~/Dev/nixfiles/hosts/redpoint/configuration.nix";
+      hyprcfg = "nvim ~/.config/hypr/hyprland.conf";
     };
 
     ohMyZsh = {
@@ -122,6 +119,7 @@
     alacritty
     betterdiscordctl
     clang
+    discord
     firefox
     git
     lxappearance
@@ -133,7 +131,6 @@
     swww
     vscode
     waybar
-    webcord-vencord
     wofi
     xfce.thunar
     xfce.thunar-archive-plugin

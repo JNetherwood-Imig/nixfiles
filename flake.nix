@@ -1,8 +1,12 @@
 {
-  inputs = { nixpkgs.url = "github:NixOs/nixpkgs/"; };
+  inputs = {
+    nixpkgs.url = "github:NixOs/nixpkgs/";
+    home-manager.url = "github:nix-community/home-manager";
+  };
 
-  outputs = { nixpkgs, ... }:
+  outputs = { nixpkgs, home-manager, ... }:
     let nixosModules.default = import ./modules/nixos;
+    homeModules.default = import ./modules/home;
     in {
       nixosConfigurations = {
         redpoint = nixpkgs.lib.nixosSystem {
@@ -10,6 +14,10 @@
           modules = [
             ./hosts/redpoint/configuration.nix
             nixosModules.default
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.sharedModules = [ homeModules.default ];
+            }
           ];
         };
       };
