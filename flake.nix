@@ -2,9 +2,10 @@
   inputs = {
     nixpkgs.url = "github:NixOs/nixpkgs/";
     home-manager.url = "github:nix-community/home-manager";
+    hyprland.url = "github:hyprwm/Hyprland";
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { nixpkgs, home-manager, hyprland, ... }:
     let nixosModules.default = import ./modules/nixos;
     homeModules.default = import ./modules/home;
     in {
@@ -16,7 +17,10 @@
             nixosModules.default
             home-manager.nixosModules.home-manager
             {
-              home-manager.sharedModules = [ homeModules.default ];
+              home-manager.sharedModules = [
+                homeModules.default
+                hyprland.homeManagerModules.default
+              ];
             }
           ];
         };
