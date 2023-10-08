@@ -93,16 +93,16 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    alacritty
+    # alacritty
     clang
     cmake
     discord
-    firefox
+    # firefox
     git
     github-desktop
     gnumake
-    gtk3
-    gtk4
+    # gtk3
+    # gtk4
     lxappearance
     neovim
     nitch
