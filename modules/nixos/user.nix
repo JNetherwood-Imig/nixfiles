@@ -4,7 +4,7 @@
       isNormalUser = true;
       description = "Jackson Netherwood-Imig";
       extraGroups = [ "networkmanager" "wheel" ];
-      shell = pkgs.zsh;
+      shell = pkgs.fish;
     };
     home-manager = {
       useGlobalPkgs = true;

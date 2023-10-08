@@ -27,15 +27,15 @@
 
             follow_mouse = 1
 
-            sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
+            sensitivity = 0
         }
 
         general {
             # See https://wiki.hyprland.org/Configuring/Variables/ for more
 
-            gaps_in = 5
-            gaps_out = 10
-            border_size = 3
+            gaps_in = 4
+            gaps_out = 8
+            border_size = 4
             col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
             col.inactive_border = rgba(595959aa)
 
@@ -44,15 +44,15 @@
 
         decoration {
 
-            rounding = 6
+            rounding = 0
 
             blur {
               enabled = true
               size = 3
-              passes = 1
+              passes = 2
             }
 
-            drop_shadow = yes
+            drop_shadow = no
             shadow_range = 4
             shadow_render_power = 3
             col.shadow = rgba(1a1a1aee)
@@ -63,8 +63,8 @@
 
             bezier = myBezier, 0.05, 0.9, 0.1, 1.05
 
-            animation = windows, 1, 4, myBezier
-            animation = windowsOut, 1, 4, default, popin 80%
+            animation = windows, 1, 4, myBezier, slide
+            animation = windowsOut, 1, 4, default, slide
             animation = border, 1, 10, default
             animation = borderangle, 1, 4, default
             animation = fade, 1, 4, default
@@ -79,6 +79,7 @@
 
         master {
             new_is_master = false
+	    mfact = 0.5
         }
 
         gestures {
@@ -90,12 +91,13 @@
 
         bind = $mainMod, RETURN, exec, alacritty
         bind = $mainMod, Q, killactive, 
-        bind = $mainMod, M, exit, 
+        bind = $mainMod SHIFT, M, exit, 
         bind = $mainMod, E, exec, thunar
         bind = $mainMod, V, togglefloating, 
-        bind = $mainMod, R, exec, wofi --show drun
+        bind = $mainMod, D, exec, rofi -show drun -show-icons
         bind = $mainMod, P, pseudo, # dwindle
         bind = $mainMod, J, togglesplit, # dwindle
+	bind = $mainMod, W, exec, firefox
 
         # Move focus with mainMod + arrow keys
         bind = $mainMod, left, movefocus, l
@@ -135,6 +137,10 @@
         bindm = $mainMod, mouse:272, movewindow
         bindm = $mainMod, mouse:273, resizewindow
 
+	# Audio
+	binde = , XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+
+	binde = , XF86AudioLowerVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%-
+	bind = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
       '';
     };
   };

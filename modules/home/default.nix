@@ -1,4 +1,7 @@
 { config, ... }: {
     home.stateVersion = "23.11";
-    imports = [ ./hyprland.nix ];
+    imports = [
+      ./hyprland.nix
+      ./desktop.nix
+    ];
 }
