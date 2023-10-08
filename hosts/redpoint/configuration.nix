@@ -39,7 +39,7 @@
     layout = "us";
     videoDrivers = [ "nvidia" ];
     displayManager.sddm.enable = true;
-    desktopManager.plasma5.enable = true;
+    # desktopManager.plasma5.enable = true;
   };
 
   hardware = {
@@ -93,10 +93,13 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    alacritty
     clang
     cmake
     discord
+    firefox
     git
+    github-desktop
     gnumake
     gtk3
     gtk4
@@ -108,6 +111,7 @@
     rofi-wayland
     rustup
     swww
+    vscode
     wev
     xdg-desktop-portal-hyprland
     xdg-user-dirs
