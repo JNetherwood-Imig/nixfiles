@@ -15,8 +15,6 @@
 
 * Fix printing
 
-* Fix xdg desktop portals
-
 * Home manager overlays
 
 * More sensible modules structure/naming
