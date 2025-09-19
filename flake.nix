@@ -20,6 +20,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
   };
 
@@ -28,20 +33,22 @@
       nixpkgs,
       nixpkgs-unstable,
       home-manager,
+      sops-nix,
       ...
     }@inputs:
     let
       system = "x86_64-linux";
 
       hosts = {
-        common = import ./hosts/common {};
-        redpoint = import ./hosts/redpoint {};
-        onsight = import ./hosts/onsight {};
+        common = import ./hosts/common { };
+        redpoint = import ./hosts/redpoint { };
+        onsight = import ./hosts/onsight { };
       };
 
       host-modules = [
         hosts.common.default
         ./modules/nixos
+        sops-nix.nixosModules.sops
       ];
 
       host-exports = {
