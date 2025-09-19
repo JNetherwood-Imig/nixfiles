@@ -7,15 +7,11 @@
 
 * Service aliases (e.g. alias 'rofi -S drun' to 'launcher', making it easy to replace)
 
-* SOPS-nix
-
 * LF
 
 * Nix colors/stylix?
 
 * Monitor shared info
-
-* Git
 
 * Fix printing
 
