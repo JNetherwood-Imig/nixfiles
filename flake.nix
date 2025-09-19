@@ -33,7 +33,6 @@
       nixpkgs,
       nixpkgs-unstable,
       home-manager,
-      sops-nix,
       ...
     }@inputs:
     let
@@ -48,7 +47,6 @@
       host-modules = [
         hosts.common.default
         ./modules/nixos
-        sops-nix.nixosModules.sops
       ];
 
       host-exports = {
@@ -61,6 +59,7 @@
         ./home
         ./modules/home
         inputs.spicetify-nix.homeManagerModules.spicetify
+        inputs.sops-nix.homeManagerModules.sops
       ];
 
     in

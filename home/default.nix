@@ -4,6 +4,7 @@
   fish.enable = true;
   git.enable = true;
   nvim.enable = true;
+  secrets.enable = true;
   terminalUtils.enable = true;
   theme.enable = true;
 
