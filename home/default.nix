@@ -1,7 +1,7 @@
-{ ... }:
+{ host-exports, ... }:
 
 {
-  fish.enable = true;
+  fish.enable = (host-exports.shells.default == "fish");
   git.enable = true;
   nvim.enable = true;
   secrets.enable = true;

@@ -1,26 +1,8 @@
 { ... }:
 
 {
-  env = {
-    shells = {
-      default = "fish";
-      extraShells = [ ];
-    };
-    windowManagers = [
-      "hyprland"
-    ];
-  };
-
-  bootLoader = "systemd-boot";
-  greeter = "sddm";
-
-  jackson.enable = true;
-
-  printing.enable = true;
-
   networking.networkmanager.enable = true;
   time.timeZone = "America/Los_Angeles";
-  polkit.enable = true;
   services.openssh.enable = true;
 
   security.rtkit.enable = true;
@@ -35,8 +17,6 @@
   ];
 
   nixpkgs.config.allowUnfree = true;
-
-  nh.enable = true;
 
   # Fish enables this by default because some completions expect man -k,
   # but this is unbelievably slow

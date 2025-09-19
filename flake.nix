@@ -2,27 +2,27 @@
   description = "NixOS System Configuration";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-25.05";
-    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "nixpkgs/nixos-25.05";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     hyprland = {
       url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
@@ -30,8 +30,8 @@
 
   outputs =
     {
+      nixpkgs-stable,
       nixpkgs,
-      nixpkgs-unstable,
       home-manager,
       ...
     }@inputs:
@@ -44,10 +44,20 @@
         onsight = import ./hosts/onsight { };
       };
 
-      host-modules = [
-        hosts.common.default
-        ./modules/nixos
-      ];
+      lib =
+        (import nixpkgs-stable {
+          config.allowUnfree = true;
+        }).lib;
+
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+        overlays = [
+          (self: super: {
+            cheatbreaker = super.callPackage ./pkgs/cheatbreaker { };
+          })
+        ];
+      };
 
       host-exports = {
         common = hosts.common.exports;
@@ -55,36 +65,40 @@
         onsight = hosts.onsight.exports;
       };
 
-      home-modules = [
+      modules = [
         ./home
         ./modules/home
         inputs.spicetify-nix.homeManagerModules.spicetify
         inputs.sops-nix.homeManagerModules.sops
       ];
 
+      host-modules = [
+        hosts.common.default
+        ./modules/nixos
+      ];
     in
     {
+      homeConfigurations.jackson = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = {
+          inherit inputs;
+          inherit host-exports;
+        };
+        inherit modules;
+      };
+
       nixosConfigurations = {
-        redpoint = nixpkgs.lib.nixosSystem {
+        redpoint = lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; };
           modules = [ hosts.redpoint.default ] ++ host-modules;
         };
 
-        onsight = nixpkgs.lib.nixosSystem {
+        onsight = lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; };
           modules = [ hosts.onsight.default ] ++ host-modules;
         };
-      };
-
-      homeConfigurations.jackson = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs-unstable.legacyPackages.${system};
-        extraSpecialArgs = {
-          inherit inputs;
-          inherit host-exports;
-        };
-        modules = home-modules;
       };
     };
 }
