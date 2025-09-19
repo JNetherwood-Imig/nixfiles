@@ -1,0 +1,5 @@
+{ config, ... }:
+
+{
+  inherit (config) monitors;
+}
