@@ -1,37 +1,37 @@
 # TODO
-[ ] Nerd fonts
+* Nerd fonts
 
-[ ] Hyprland utils
+* Hyprland utils
 
-[ ] AirPods media controls
+* AirPods media controls
 
-[ ] Service aliases (e.g. alias 'rofi -S drun' to 'launcher', making it easy to replace)
+* Service aliases (e.g. alias 'rofi -S drun' to 'launcher', making it easy to replace)
 
-[ ] SOPS-nix
+* SOPS-nix
 
-[ ] LF
+* LF
 
-[ ] Nix colors/stylix?
+* Nix colors/stylix?
 
-[ ] Monitor shared info
+* Monitor shared info
 
-[ ] Git
+* Git
 
-[ ] Fix printing
+* Fix printing
 
-[ ] Fix xdg desktop portals
+* Fix xdg desktop portals
 
-[ ] Home manager overlays
+* Home manager overlays
 
-[ ] More sensible modules structure/naming
+* More sensible modules structure/naming
 
-[ ] Zen browser
+* Zen browser
 
-[ ] Firefox search engines
+* Firefox search engines
 
-[ ] Zed material gruvbox
-[ ] Vesktop material gruvbox
-[ ] Spotify material gruvbox
-[ ] Capitaine cursors material gruvbox
-[ ] GTK material gruvbox (+icons)
-[ ] Theme interface
+* Zed material gruvbox
+* Vesktop material gruvbox
+* Spotify material gruvbox
+* Capitaine cursors material gruvbox
+* GTK material gruvbox (+icons)
+* Theme interface
