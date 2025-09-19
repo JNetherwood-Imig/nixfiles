@@ -6,10 +6,10 @@
 }:
 
 let
-  cfg = config.env.xdgDesktopPortal;
+  cfg = config.xdgDesktopPortal;
 in
 {
-  options.env.xdgDesktopPortal = {
+  options.xdgDesktopPortal = {
     enable = lib.mkEnableOption "xdg-desktop-portal";
   };
 
@@ -27,8 +27,5 @@ in
         default = "gtk";
       };
     };
-
-    security.polkit.enable = true;
-    services.gnome.gnome-keyring.enable = true;
   };
 }

@@ -7,6 +7,7 @@
   secrets.enable = true;
   terminalUtils.enable = true;
   theme.enable = true;
+  xdgDesktopPortal.enable = true;
 
   desktopApps = {
     # cheatbreaker.enable = true;
