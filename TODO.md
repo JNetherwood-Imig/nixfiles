@@ -15,8 +15,6 @@
 
 * Fix printing
 
-* Home manager overlays
-
 * More sensible modules structure/naming
 
 * Zen browser

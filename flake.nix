@@ -46,10 +46,7 @@
         onsight = import ./hosts/onsight { };
       };
 
-      spicePkgs = import spicetify-nix {
-        inherit system;
-      };
-
+      spicePkgs = spicetify-nix.legacyPackages.${system};
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
@@ -57,7 +54,7 @@
           (self: super: {
             spicetifyThemes = spicePkgs.themes;
             spicetifyExtensions = spicePkgs.extensions;
-            cheatbreaker = super.callPackage ./pkgs/cheatbreaker { };
+            cheatbreaker = super.callPackage ./pkgs/cheatbreaker.nix { };
           })
         ];
       };

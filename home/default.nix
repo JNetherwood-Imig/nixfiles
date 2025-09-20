@@ -6,6 +6,8 @@
   ];
 
   fish.enable = true;
+  windowManagers.hyprland.enable = true;
+
   git.enable = true;
   nvim.enable = true;
   secrets.enable = true;
@@ -23,8 +25,6 @@
     vesktop.enable = true;
     zed.enable = true;
   };
-
-  windowManagers.hyprland.enable = true;
 
   home.stateVersion = "25.05";
   home.username = "jackson";
