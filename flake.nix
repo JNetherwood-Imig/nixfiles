@@ -33,6 +33,8 @@
       nixpkgs-stable,
       nixpkgs,
       home-manager,
+      sops-nix,
+      spicetify-nix,
       ...
     }@inputs:
     let
@@ -44,32 +46,27 @@
         onsight = import ./hosts/onsight { };
       };
 
-      lib =
-        (import nixpkgs-stable {
-          config.allowUnfree = true;
-        }).lib;
+      spicePkgs = import spicetify-nix {
+        inherit system;
+      };
 
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
         overlays = [
           (self: super: {
+            spicetifyThemes = spicePkgs.themes;
+            spicetifyExtensions = spicePkgs.extensions;
             cheatbreaker = super.callPackage ./pkgs/cheatbreaker { };
           })
         ];
       };
 
-      host-exports = {
-        common = hosts.common.exports;
-        redpoint = hosts.redpoint.exports;
-        onsight = hosts.onsight.exports;
-      };
-
       modules = [
         ./home
         ./modules/home
-        inputs.spicetify-nix.homeManagerModules.spicetify
-        inputs.sops-nix.homeManagerModules.sops
+        spicetify-nix.homeManagerModules.spicetify
+        sops-nix.homeManagerModules.sops
       ];
 
       host-modules = [
@@ -78,27 +75,29 @@
       ];
     in
     {
-      homeConfigurations.jackson = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = {
-          inherit inputs;
-          inherit host-exports;
-        };
-        inherit modules;
-      };
-
       nixosConfigurations = {
-        redpoint = lib.nixosSystem {
+        redpoint = nixpkgs-stable.lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; };
           modules = [ hosts.redpoint.default ] ++ host-modules;
         };
 
-        onsight = lib.nixosSystem {
+        onsight = nixpkgs-stable.lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; };
           modules = [ hosts.onsight.default ] ++ host-modules;
         };
       };
+
+      homeConfigurations = {
+        "jackson@redpoint" = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = {
+            inherit inputs;
+          };
+          inherit modules;
+        };
+      };
+
     };
 }

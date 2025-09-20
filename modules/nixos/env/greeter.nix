@@ -1,10 +1,10 @@
 { config, lib, ... }:
 
 let
-  cfg = config.greeter;
+  cfg = config.env.greeter;
 in
 {
-  options.greeter = lib.mkOption {
+  options.env.greeter = lib.mkOption {
     type = lib.types.enum [ "sddm" ];
   };
 

@@ -1,7 +1,11 @@
-{ host-exports, ... }:
+{ ... }:
 
 {
-  fish.enable = (host-exports.shells.default == "fish");
+  imports = [
+    ./desktopApps
+  ];
+
+  fish.enable = true;
   git.enable = true;
   nvim.enable = true;
   secrets.enable = true;
@@ -10,12 +14,11 @@
   xdgDesktopPortal.enable = true;
 
   desktopApps = {
-    # cheatbreaker.enable = true;
+    cheatbreaker.enable = true;
     firefox.enable = true;
     ghostty.enable = true;
     protonPass.enable = true;
     rofi.enable = true;
-    spotify.enable = true;
     swww.enable = true;
     vesktop.enable = true;
     zed.enable = true;
