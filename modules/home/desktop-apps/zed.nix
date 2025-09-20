@@ -19,6 +19,10 @@ in
       extensions = [
         "nix"
       ];
+      extraPackages = with pkgs; [
+        nixd
+        nil
+      ];
       userSettings = {
         vim_mode = true;
         ui_font_size = 16;
@@ -30,11 +34,5 @@ in
         };
       };
     };
-
-    # Dependencies of nix extension
-    home.packages = with pkgs; [
-      nixd
-      nil
-    ];
   };
 }

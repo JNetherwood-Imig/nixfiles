@@ -10,6 +10,7 @@
       ./fonts.nix
       ./nh.nix
       ./printing.nix
+      ./rustup.nix
       ./security.nix
       ./user.nix
     ];
