@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./desktopApps
+    ./desktop-apps
   ];
 
   fish.enable = true;
