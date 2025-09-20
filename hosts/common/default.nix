@@ -5,6 +5,7 @@
     imports = [
       ./boot-loader.nix
       ./config.nix
+      ./direnv.nix
       ./env.nix
       ./fonts.nix
       ./nh.nix
