@@ -3,7 +3,8 @@
 {
   programs.spicetify = {
     enable = true;
-    theme = pkgs.spicetifyThemes.onepunch;
+    theme = pkgs.spicetifyThemes.lucid;
     colorScheme = "dark";
+    extensions = [ pkgs.spicetifyExtensions.fullAppDisplay ];
   };
 }

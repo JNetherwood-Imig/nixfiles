@@ -18,6 +18,7 @@ in
       enable = true;
       extensions = [
         "nix"
+	"toml"
       ];
       extraPackages = with pkgs; [
         nixd

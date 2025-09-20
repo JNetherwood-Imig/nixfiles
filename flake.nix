@@ -20,6 +20,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-colors.url = "github:Misterio77/nix-colors";
+
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,6 +35,7 @@
       nixpkgs-stable,
       nixpkgs,
       home-manager,
+      nix-colors,
       sops-nix,
       spicetify-nix,
       ...
@@ -62,6 +65,7 @@
       modules = [
         ./home
         ./modules/home
+        nix-colors.homeManagerModules.default
         spicetify-nix.homeManagerModules.spicetify
         sops-nix.homeManagerModules.sops
       ];
@@ -91,6 +95,7 @@
           inherit pkgs;
           extraSpecialArgs = {
             inherit inputs;
+            inherit (inputs) nix-colors;
           };
           inherit modules;
         };
