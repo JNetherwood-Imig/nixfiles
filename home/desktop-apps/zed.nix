@@ -1,24 +1,15 @@
 {
-  config,
-  lib,
   pkgs,
   ...
 }:
 
-let
-  cfg = config.desktopApps.zed;
-in
 {
-  options.desktopApps.zed = {
-    enable = lib.mkEnableOption "zed";
-  };
 
-  config = lib.mkIf cfg.enable {
     programs.zed-editor = {
       enable = true;
       extensions = [
         "nix"
-	"toml"
+        "toml"
       ];
       extraPackages = with pkgs; [
         nixd
@@ -26,6 +17,7 @@ in
       ];
       userSettings = {
         vim_mode = true;
+        helix_mode = true;
         ui_font_size = 16;
         buffer_font_size = 16;
         theme = {
@@ -33,7 +25,6 @@ in
           light = "Gruvbox Light";
           dark = "Gruvbox Dark";
         };
-      };
     };
   };
 }

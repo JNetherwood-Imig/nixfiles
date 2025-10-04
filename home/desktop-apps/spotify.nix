@@ -5,6 +5,6 @@
     enable = true;
     theme = pkgs.spicetifyThemes.lucid;
     colorScheme = "dark";
-    extensions = [ pkgs.spicetifyExtensions.fullAppDisplay ];
+    enabledExtensions = [ pkgs.spicetifyExtensions.fullAppDisplay ];
   };
 }

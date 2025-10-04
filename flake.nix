@@ -28,6 +28,13 @@
     };
 
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
+
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake/beta";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    zig.url = "github:mitchellh/zig-overlay";
   };
 
   outputs =
@@ -38,6 +45,8 @@
       nix-colors,
       sops-nix,
       spicetify-nix,
+      zen-browser,
+      zig,
       ...
     }@inputs:
     let
@@ -55,9 +64,10 @@
         config.allowUnfree = true;
         overlays = [
           (self: super: {
-            spicetifyThemes = spicePkgs.themes;
-            spicetifyExtensions = spicePkgs.extensions;
             cheatbreaker = super.callPackage ./pkgs/cheatbreaker.nix { };
+            spicetifyExtensions = spicePkgs.extensions;
+            spicetifyThemes = spicePkgs.themes;
+            zigpkgs = zig.packages.${system};
           })
         ];
       };
@@ -68,6 +78,7 @@
         nix-colors.homeManagerModules.default
         spicetify-nix.homeManagerModules.spicetify
         sops-nix.homeManagerModules.sops
+        zen-browser.homeModules.beta
       ];
 
       host-modules = [

@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -17,13 +17,10 @@
 
   desktopApps = {
     cheatbreaker.enable = true;
-    firefox.enable = true;
-    ghostty.enable = true;
     protonPass.enable = true;
     rofi.enable = true;
     swww.enable = true;
     vesktop.enable = true;
-    zed.enable = true;
   };
 
   home.stateVersion = "25.05";
