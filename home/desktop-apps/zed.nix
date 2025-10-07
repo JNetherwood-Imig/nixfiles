@@ -1,19 +1,9 @@
-{
-  pkgs,
-  ...
-}:
-
-{
-
+{ pkgs, ... }: {
     programs.zed-editor = {
       enable = true;
       extensions = [
         "nix"
         "toml"
-      ];
-      extraPackages = with pkgs; [
-        nixd
-        nil
       ];
       userSettings = {
         vim_mode = true;
@@ -27,4 +17,8 @@
         };
     };
   };
+  home.packages = with pkgs; [
+    nixd
+    nil
+  ];
 }

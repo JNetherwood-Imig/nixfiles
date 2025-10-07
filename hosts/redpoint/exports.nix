@@ -1,5 +1,0 @@
-{ config, ... }:
-
-{
-  inherit (config) monitors;
-}

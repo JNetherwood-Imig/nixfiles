@@ -1,13 +1,9 @@
 # TODO
-* Nerd fonts
+* JetBrainsMono NF & Noto sans
 
-* Hyprland utils
-
-* AirPods media controls
+* Hyprland utils (hypridle, hyprlock, some screenshot tool)
 
 * Service aliases (e.g. alias 'rofi -S drun' to 'launcher', making it easy to replace)
-
-* LF
 
 * Nix colors/stylix?
 
@@ -15,15 +11,4 @@
 
 * Fix printing
 
-* More sensible modules structure/naming
-
-* Zen browser
-
-* Firefox search engines
-
-* Zed material gruvbox
-* Vesktop material gruvbox
-* Spotify material gruvbox
-* Capitaine cursors material gruvbox
-* GTK material gruvbox (+icons)
-* Theme interface
+* Zen workspaces

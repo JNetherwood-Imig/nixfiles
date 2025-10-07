@@ -1,11 +1,17 @@
-{ ... }:
 {
   imports = [
+    ./cheatbreaker.nix
     ./darktable.nix
-    ./ghostty.nix
-    ./helix.nix
+    ./proton-pass.nix
     ./spotify.nix
+    ./swww.nix
+    ./vesktop.nix
     ./zed.nix
-    ./zen.nix
   ];
+
+  desktopApps = {
+    browser = "zen";
+    launcher = "rofi";
+    terminal = "ghostty";
+  };
 }

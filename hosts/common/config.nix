@@ -1,5 +1,3 @@
-{ ... }:
-
 {
   networking.networkmanager.enable = true;
   time.timeZone = "America/Los_Angeles";
@@ -16,9 +14,21 @@
     "flakes"
   ];
 
+  programs.dconf.enable = true;
+
   nixpkgs.config.allowUnfree = true;
 
   # Fish enables this by default because some completions expect man -k,
   # but this is unbelievably slow
   documentation.man.generateCaches = false;
+
+  shells = {
+    default = "nushell";
+    extraShells = [ "fish" ];
+  };
+  greeter = "gdm";
+  windowManagers = [
+    "hyprland"
+    "niri"
+  ];
 }

@@ -1,8 +1,9 @@
-{ ... }:
-
 {
   imports = [
-    ./env
+    ./greeter
+    ./shells
+    ./window-managers
+
     ./monitors.nix
   ];
 }

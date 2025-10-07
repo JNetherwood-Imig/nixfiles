@@ -1,26 +1,20 @@
 {
-  config,
   lib,
   pkgs,
   inputs,
+  window-managers,
   ...
 }:
-
 let
-  cfg = config.windowManagers.hyprland;
+  hyprPkgs = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
 in
 {
-  options.windowManagers.hyprland = {
-    enable = lib.mkEnableOption "hyprland";
-  };
-
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf (builtins.elem "hyprland" window-managers) {
     wayland.windowManager.hyprland = {
       enable = true;
       systemd.enable = true;
-      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-      portalPackage =
-        inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+      package = hyprPkgs.hyprland;
+      portalPackage = hyprPkgs.xdg-desktop-portal-hyprland;
       settings = {
         monitor = [
           "DP-1, 3440x1440@144, auto, 1.25"
@@ -158,7 +152,11 @@ in
     };
 
     home.sessionVariables = {
-      NIXOS_OZONE_WL = "1";
+      HYPRCURSOR_THEME = "rose-pine-hyprcursor";
+      HYPRCURSOR_SIZE = "32";
     };
+    home.packages = [
+      pkgs.rose-pine-hyprcursor
+    ];
   };
 }

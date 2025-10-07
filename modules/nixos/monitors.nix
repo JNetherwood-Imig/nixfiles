@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ config, lib, ... }:
 
 let
   autoMode = lib.types.enum [
@@ -75,4 +75,5 @@ let
 in
 {
   options.monitors = lib.mkOption { type = lib.types.listOf monitor; };
+  config.home-manager.extraSpecialArgs.monitors = config.monitors;
 }

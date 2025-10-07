@@ -2,7 +2,6 @@
   fetchurl,
   appimageTools,
 }:
-
 appimageTools.wrapAppImage rec {
   pname = "cheatbreaker";
   version = "3.0.8";
