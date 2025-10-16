@@ -1,3 +1,8 @@
+# TODO niri-flake issues
+# spawn attributes DNE (repeat, allow-inhibit, allow-when-locked)
+# move-window-to-workspace DNE
+# screenshot-screen DNE
+# screenshot write-to-disk DNE?
 {
   config,
   lib,
@@ -14,13 +19,21 @@ in {
     settings = {
       hotkey-overlay.skip-at-startup = true;
       prefer-no-csd = true;
+      screenshot-path = "~/Pictures/Screenshots/Screenshot_%Y-%m-%d_%H:%M:%S.png"
       input = {
         keyboard = {
           xkb.layout = "us,es";
           repeat-delay = 350;
           repeat-rate = 35;
         };
-        mouse.accel-profile = "flat";
+        mouse = {
+          accel-profile = "flat";
+        };
+        touchpad = {
+          dwt = true;
+          natural-scroll = true;
+          click-method = "clickfinger";
+        };
         warp-mouse-to-focus.enable = true;
         power-key-handling.enable = false;
       };
@@ -40,7 +53,7 @@ in {
           { proportion = 2. / 3.; }
           { proportion = 2. / 2.; } # yes this is dumb but it pleases my brain
         ];
-        default-column-width = {};
+        default-column-width = { proportion = 1. / 2. };
         focus-ring.enable = false;
         border = {
           enable = true;
@@ -78,22 +91,22 @@ in {
       binds = with config.lib.niri.actions; {
         "Mod+Shift+Slash".action = show-hotkey-overlay;
 
-        "Mod+Return".action = spawn-sh "${config.desktopApps.terminals.defaultCmd}"; # { repeat = false; };
-        "Mod+D".action = spawn-sh "${config.desktopApps.launchers.defaultCmd}"; # { repeat = false; };
-        "Mod+W".action = spawn-sh "${config.desktopApps.browsers.defaultCmd}"; # { repeat = false; };
+        "Mod+Return".action = spawn lib.strings.splitString " " "${config.desktopApps.terminals.defaultCmd}"; # { repeat = false; };
+        "Mod+D".action = spawn lib.strings.splitString " " "${config.desktopApps.launchers.defaultCmd}"; # { repeat = false; };
+        "Mod+W".action = spawn lib.strings.splitString " " "${config.desktopApps.browsers.defaultCmd}"; # { repeat = false; };
 
         "Mod+O".action = toggle-overview; # { repeat = false; };
 
         "Mod+Q".action = close-window; # { repeat = false; };
 
-        "XF86AudioRaiseVolume".action = spawn-sh "${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+"; # { allow-when-locked=true; };
-        "XF86AudioLowerVolume".action = spawn-sh "${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+"; # { allow-when-locked=true; };
-        "XF86AudioMute".action = spawn-sh "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; # { allow-when-locked=true; };
-        "XF86AudioMicMute".action = spawn-sh "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; # { allow-when-locked=true; };
+        "XF86AudioRaiseVolume".action = spawn [ "${pkgs.wireplumber}/bin/wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "1%+" ]; # { allow-when-locked=true; };
+        "XF86AudioLowerVolume".action = spawn [ "${pkgs.wireplumber}/bin/wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "1%+" ]; # { allow-when-locked=true; };
+        "XF86AudioMute".action = spawn [ "${pkgs.wireplumber}/bin/wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle" ]; # { allow-when-locked=true; };
+        "XF86AudioMicMute".action = spawn [ "${pkgs.wireplumber}/bin/wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle" ]; # { allow-when-locked=true; };
 
-        "XF86AudioPlay".action = spawn-sh "${pkgs.playerctl}/bin/playerctl play-pause"; # { allow-when-locked=true; };
-        "XF86AudioPrev".action = spawn-sh "${pkgs.playerctl}/bin/playerctl previous"; # { allow-when-locked=true; };
-        "XF86AudioNext".action = spawn-sh "${pkgs.playerctl}/bin/playerctl next"; # { allow-when-locked=true; };
+        "XF86AudioPlay".action = spawn [ "${pkgs.playerctl}/bin/playerctl" "play-pause" ]; # { allow-when-locked=true; };
+        "XF86AudioPrev".action = spawn [ "${pkgs.playerctl}/bin/playerctl" "previous" ]; # { allow-when-locked=true; };
+        "XF86AudioNext".action = spawn [ "${pkgs.playerctl}/bin/playerctl" "next" ]; # { allow-when-locked=true; };
 
         "Mod+H".action = focus-column-left;
         "Mod+J".action = focus-window-down;
@@ -139,7 +152,6 @@ in {
         "Mod+8".action = focus-workspace 8;
         "Mod+9".action = focus-workspace 9;
 
-        # DNE in niri-flake
         # "Mod+Ctrl+1".action = move-window-to-workspace 1;
         # "Mod+Ctrl+2".action = move-window-to-workspace 2;
         # "Mod+Ctrl+3".action = move-window-to-workspace 3;
@@ -157,15 +169,13 @@ in {
         "Mod+Period".action = expel-window-from-column;
 
         "Mod+R".action = switch-preset-column-width;
-        "Mod+Shift+R".action = switch-preset-window-height;
-        "Mod+Ctrl+R".action = reset-window-height;
+        "Mod+Shift+R".action = expand-column-to-available-width;
 
         "Mod+F".action = maximize-column;
         "Mod+Shift+F".action = fullscreen-window;
-        "Mod+Ctrl+F".action = expand-column-to-available-width;
 
         "Mod+C".action = center-column;
-        "Mod+Ctrl+C".action = center-visible-columns;
+        "Mod+Shift+C".action = center-visible-columns;
 
         "Mod+Minus".action = set-column-width "-10%";
         "Mod+Equal".action = set-column-width "+10%";
@@ -179,10 +189,12 @@ in {
         "Mod+Space".action = switch-layout "next";
         "Mod+Shift+Space".action = switch-layout "prev";
 
-        "Print".action = screenshot;
-        # DNE
-        # "Ctrl+Print".action = screenshot-screen;
-        "Alt+Print".action = screenshot-window;
+        # "Print".action = screenshot-screen { write-to-disk = false; };
+        "Shift+Print".action = screenshot { write-to-disk = false; show-pointer = false; };
+        "Ctrl+Print".action = screenshot-window { write-to-disk = false; };
+        # "Mod+Print".action = screenshot-screen;
+        "Mod+Shift+Print".action = screenshot { show-pointer = false; };
+        "Mod+Ctrl+Print".action = screenshot-window;
 
         "Mod+Escape".action = toggle-keyboard-shortcuts-inhibit; # { allow-inhibiting = false; };
 
