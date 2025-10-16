@@ -4,13 +4,13 @@
 }:
 appimageTools.wrapAppImage rec {
   pname = "cheatbreaker";
-  version = "3.0.8";
+  version = "3.1.0";
 
   src = appimageTools.extract {
     inherit pname version;
     src = fetchurl {
-      url = "https://github.com/CheatBreakerNet/Launcher/releases/download/3.0.8/CheatBreaker.AppImage";
-      sha256 = "sha256:6e65b08d8e94fac9f507da010af0b77cc57ea7c69391ea9d2c4e9375b5a3749d";
+      url = "https://r2.cheatbreaker.net/Launcher/master/Linux/amd64/CheatBreaker.AppImage";
+      sha256 = "sha256:01j5fzcc4r5vah4n6cy77392qr24b7vviqviblclr9d65h4ny5cd";
     };
   };
 

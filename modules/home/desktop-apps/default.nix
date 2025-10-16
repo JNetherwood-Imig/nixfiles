@@ -1,7 +1,8 @@
 {
   imports = [
-    ./browser
-    ./launcher
-    ./terminal
+    ./browsers
+    ./editors
+    ./launchers
+    ./terminals
   ];
 }

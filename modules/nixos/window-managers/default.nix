@@ -1,20 +1,17 @@
 { config, lib, ... }:
-let
-  wm = lib.types.enum [
-    "gnome"
-    "hyprland"
-    "niri"
-    "plasma"
-  ];
-in
 {
   imports = [
-    ./plasma.nix
     ./gnome.nix
+    ./hyprland.nix
+    ./niri.nix
+    ./plasma.nix
   ];
 
-  options.windowManagers = lib.mkOption {
-    type = lib.types.listOf wm;
+  options.windowManagers = {
+    gnome.enable = lib.mkEnableOption "gnome";
+    hyprland.enable = lib.mkEnableOption "hyprland";
+    niri.enable = lib.mkEnableOption "niri";
+    plasma.enable = lib.mkEnableOption "plasma";
   };
 
   config.home-manager.extraSpecialArgs.window-managers = config.windowManagers;

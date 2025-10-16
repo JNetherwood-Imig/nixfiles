@@ -7,6 +7,7 @@
 
   options.greeter = lib.mkOption {
     type = lib.types.enum [
+      "none"
       "gdm"
       "sddm"
     ];

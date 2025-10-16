@@ -2,6 +2,9 @@
 {
   programs.fish = {
     enable = true;
+    shellInit = ''
+        set -U fish_greeting
+      '';
     shellAliases = {
       ls = "${pkgs.eza}/bin/eza --color=always --icons=always --hyperlink --oneline";
       la = "${pkgs.eza}/bin/eza --color=always --icons=always --hyperlink --oneline --all";

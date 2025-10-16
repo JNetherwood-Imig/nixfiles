@@ -1,35 +1,29 @@
 {
+  config,
   lib,
   pkgs,
-  inputs,
   window-managers,
   ...
 }:
-let
-  hyprPkgs = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
-in
 {
-  config = lib.mkIf (builtins.elem "hyprland" window-managers) {
+  config = lib.mkIf window-managers.hyprland.enable {
     wayland.windowManager.hyprland = {
       enable = true;
       systemd.enable = true;
-      package = hyprPkgs.hyprland;
-      portalPackage = hyprPkgs.xdg-desktop-portal-hyprland;
       settings = {
         monitor = [
-          "DP-1, 3440x1440@144, auto, 1.25"
+          "DP-1,3440x1440@144,0x0,1.25"
         ];
-        exec-once = [ ];
         general = {
           gaps_in = 5;
           gaps_out = 20;
-          border_size = 1;
+          border_size = 2;
           resize_on_border = false;
           allow_tearing = false;
           layout = "dwindle";
         };
         decoration = {
-          rounding = 10;
+          rounding = 0;
           shadow = {
             enabled = true;
             range = 10;
@@ -85,14 +79,13 @@ in
           repeat_rate = 35;
           repeat_delay = 350;
           follow_mouse = true;
-          sensitivity = -0.5;
           accel_profile = "flat";
         };
         bind = [
-          "Super, Return, exec, ${pkgs.ghostty}/bin/ghostty"
-          "Super, D, exec, ${pkgs.rofi}/bin/rofi -show drun"
-          "Super, W, exec, ${pkgs.firefox}/bin/firefox"
-          "Super, E, exec, ${pkgs.zed-editor}/bin/zeditor"
+          "Super, Return, exec, ${config.desktopApps.terminals.defaultCmd}"
+          "Super, D, exec, ${config.desktopApps.launchers.defaultCmd}"
+          "Super, W, exec, ${config.desktopApps.browsers.defaultCmd}"
+          "Super, E, exec, ${config.desktopApps.editors.defaultCmd}"
 
           "Super, Q, killactive"
           "Control Alt, Delete, exit"
@@ -155,6 +148,7 @@ in
       HYPRCURSOR_THEME = "rose-pine-hyprcursor";
       HYPRCURSOR_SIZE = "32";
     };
+
     home.packages = [
       pkgs.rose-pine-hyprcursor
     ];

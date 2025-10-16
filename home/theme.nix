@@ -1,22 +1,48 @@
 { pkgs, ... }:
 {
-  gtk = {
-    enable = true;
-    colorScheme = "dark";
-    theme = {
-      name = "Gruvbox-Dark-Medium";
-      package = pkgs.gruvbox-gtk-theme.override {
-        tweakVariants = [ "medium" ];
+  globalTheme = "gruvbox";
+
+  stylix = {
+    fonts = {
+      monospace = {
+        package = pkgs.jetbrains-mono;
+        name = "JetBrains Mono";
+      };
+      serif = {
+        package = pkgs.noto-fonts;
+        name = "Noto Serif";
+      };
+      sansSerif = {
+        package = pkgs.noto-fonts;
+        name = "Noto Sans";
+      };
+      emoji = {
+        package = pkgs.noto-fonts-color-emoji;
+        name = "Noto Color Emoji";
+      };
+
+      sizes = {
+        terminal = 14;
+        applications = 12;
       };
     };
-    iconTheme = {
+
+    cursor = {
       name = "Adwaita";
+      size = 24;
       package = pkgs.adwaita-icon-theme;
     };
-    cursorTheme = {
-      name = "capitaine-cursors";
-      size = 32;
-      package = pkgs.capitaine-cursors;
+
+    iconTheme = {
+      enable = true;
+      package = pkgs.adwaita-icon-theme;
+      dark = "Adwaita";
+      light = "Adwaita";
+    };
+
+    targets = {
+      niri.enable = true;
+      zen-browser.profileNames = [ "default" ];
     };
   };
 }

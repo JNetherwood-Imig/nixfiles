@@ -1,15 +1,31 @@
-{ ... }:
-
 {
   imports = [
     ./boot-loader.nix
-    ./config.nix
+    ./dev.nix
     ./direnv.nix
-    ./fonts.nix
-    ./nh.nix
+    ./hardware.nix
     ./printing.nix
-    ./rustup.nix
     ./security.nix
+    ./services.nix
+    ./stylix.nix
     ./user.nix
+  ];
+
+  shells = {
+    default = "fish";
+    extraShells = [ "nushell" ];
+  };
+
+  greeter = "none";
+
+  windowManagers = {
+    hyprland.enable = true;
+    niri.enable = true;
+  };
+
+  nixpkgs.config.allowUnfree = true;
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
   ];
 }

@@ -19,7 +19,7 @@
   #   };
   # };
 
-  config = lib.mkIf (builtins.elem "gnome" config.windowManagers) {
+  config = lib.mkIf config.windowManagers.gnome.enable {
     services.desktopManager.gnome.enable = true;
     environment.gnome.excludePackages = (
       with pkgs;

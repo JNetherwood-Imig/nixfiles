@@ -1,7 +1,10 @@
-{ config, ... }:
+{ config, lib, ... }:
 let
   cfg = config.shells;
 in
 {
-  programs.fish.enable = (cfg.default == "fish" || builtins.elem "fish" cfg.extraShells);
+  config = lib.mkIf (cfg.default == "fish" || builtins.elem "fish" cfg.extraShells) {
+    programs.fish.enable = true;
+    documentation.man.generateCaches = false;
+  };
 }

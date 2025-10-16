@@ -1,11 +1,8 @@
-{ config, lib, ... }:
+{ lib, ... }:
 
 let
   autoMode = lib.types.enum [
     "preferred"
-    "highres"
-    "highrr"
-    "maxwidth"
   ];
   mode =
     { ... }:
@@ -75,5 +72,4 @@ let
 in
 {
   options.monitors = lib.mkOption { type = lib.types.listOf monitor; };
-  config.home-manager.extraSpecialArgs.monitors = config.monitors;
 }

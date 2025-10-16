@@ -7,7 +7,7 @@
 {
   # TODO: https://github.com/nix-community/plasma-manager
   # https://nixos.wiki/wiki/Plasma-Manager
-  config = lib.mkIf (builtins.elem "plasma" config.windowManagers) {
+  config = lib.mkIf config.windowManagers.plasma.enable {
     services.desktopManager.plasma6.enable = true;
     environment.plasma6.excludePackages = with pkgs; [
       kdePackages.elisa # Simple music player aiming to provide a nice experience for its users

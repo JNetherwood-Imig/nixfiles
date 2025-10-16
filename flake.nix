@@ -14,14 +14,27 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    sops-nix = {
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    sops = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
+    spicetify = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    zen-browser = {
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    zen = {
       url = "github:0xc000022070/zen-browser-flake/beta";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -31,35 +44,50 @@
     {
       nixpkgs,
       home-manager,
-      sops-nix,
-      spicetify-nix,
-      zen-browser,
+      hyprland,
+      niri,
+      sops,
+      spicetify,
+      stylix,
+      zen,
       ...
-    }@inputs:
+    }:
     let
       system = "x86_64-linux";
 
-      spicePkgs = spicetify-nix.legacyPackages.${system};
+      hyprPkgs = hyprland.packages.${system};
+      # spicePkgs = spicetify.legacyPackages.${system};
+
       overlays = [
+        niri.overlays.niri
+
         (self: super: {
           cheatbreaker = super.callPackage ./pkgs/cheatbreaker.nix { };
-          spicetifyExtensions = spicePkgs.extensions;
-          spicetifyThemes = spicePkgs.themes;
+          hyprland = hyprPkgs.hyprland;
+          xdg-desktop-portal-hyprland = hyprPkgs.xdg-desktop-portal-hyprland;
+          # spicetify.extensions = spicePkgs.extensions;
+          # spicetify.themes = spicePkgs.themes;
         })
       ];
 
       home-modules = [
         ./home
         ./modules/home
-        sops-nix.homeManagerModules.sops
-        spicetify-nix.homeManagerModules.spicetify
-        zen-browser.homeModules.beta
+
+        niri.homeModules.niri
+        niri.homeModules.stylix
+        sops.homeManagerModules.sops
+        spicetify.homeManagerModules.spicetify
+        zen.homeModules.beta
       ];
 
-      common-modules = [
+      host-modules = [
         ./hosts/common
         ./modules/nixos
+
+        stylix.nixosModules.stylix
         home-manager.nixosModules.home-manager
+
         {
           nixpkgs.overlays = overlays;
           home-manager = {
@@ -68,7 +96,6 @@
             useUserPackages = true;
             users.jackson = import ./home;
             sharedModules = home-modules;
-            extraSpecialArgs = { inherit inputs; };
           };
         }
       ];
@@ -77,17 +104,12 @@
       nixosConfigurations = {
         redpoint = nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit inputs; };
-          modules = [
-            ./hosts/redpoint
-          ]
-          ++ common-modules;
+          modules = [ ./hosts/redpoint ] ++ host-modules;
         };
 
         onsight = nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit inputs; };
-          modules = [ ./hosts/onsight ] ++ common-modules;
+          modules = [ ./hosts/onsight ] ++ host-modules;
         };
       };
     };
