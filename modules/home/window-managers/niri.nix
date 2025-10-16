@@ -1,8 +1,6 @@
 # TODO niri-flake issues
-# spawn attributes DNE (repeat, allow-inhibit, allow-when-locked)
-# move-window-to-workspace DNE
-# screenshot-screen DNE
-# screenshot write-to-disk DNE?
+# Parser gets fucked by any multiline option definitions in niri-config src
+# Parser doesn't read global bind options (repeat, allow-when-locked, etc.)
 {
   config,
   lib,
@@ -97,7 +95,7 @@ in {
 
         "Mod+O".action = toggle-overview; # { repeat = false; };
 
-        "Mod+Q".action = close-window; # { repeat = false; };
+        "Mod+Q".action = close-window; # = { repeat = false; };
 
         "XF86AudioRaiseVolume".action = spawn [ "${pkgs.wireplumber}/bin/wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "1%+" ]; # { allow-when-locked=true; };
         "XF86AudioLowerVolume".action = spawn [ "${pkgs.wireplumber}/bin/wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "1%+" ]; # { allow-when-locked=true; };
@@ -152,21 +150,28 @@ in {
         "Mod+8".action = focus-workspace 8;
         "Mod+9".action = focus-workspace 9;
 
-        # "Mod+Ctrl+1".action = move-window-to-workspace 1;
-        # "Mod+Ctrl+2".action = move-window-to-workspace 2;
-        # "Mod+Ctrl+3".action = move-window-to-workspace 3;
-        # "Mod+Ctrl+4".action = move-window-to-workspace 4;
-        # "Mod+Ctrl+5".action = move-window-to-workspace 5;
-        # "Mod+Ctrl+6".action = move-window-to-workspace 6;
-        # "Mod+Ctrl+7".action = move-window-to-workspace 7;
-        # "Mod+Ctrl+8".action = move-window-to-workspace 8;
-        # "Mod+Ctrl+9".action = move-window-to-workspace 9;
+        # "Mod+Shift+1".action = move-window-to-workspace 1;
+        # "Mod+Shift+2".action = move-window-to-workspace 2;
+        # "Mod+Shift+3".action = move-window-to-workspace 3;
+        # "Mod+Shift+4".action = move-window-to-workspace 4;
+        # "Mod+Shift+5".action = move-window-to-workspace 5;
+        # "Mod+Shift+6".action = move-window-to-workspace 6;
+        # "Mod+Shift+7".action = move-window-to-workspace 7;
+        # "Mod+Shift+8".action = move-window-to-workspace 8;
+        # "Mod+Shift+9".action = move-window-to-workspace 9;
+
+        # "Mod+Ctrl+1".action = move-column-to-workspace 1;
+        # "Mod+Ctrl+2".action = move-column-to-workspace 2;
+        # "Mod+Ctrl+3".action = move-column-to-workspace 3;
+        # "Mod+Ctrl+4".action = move-column-to-workspace 4;
+        # "Mod+Ctrl+5".action = move-column-to-workspace 5;
+        # "Mod+Ctrl+6".action = move-column-to-workspace 6;
+        # "Mod+Ctrl+7".action = move-column-to-workspace 7;
+        # "Mod+Ctrl+8".action = move-column-to-workspace 8;
+        # "Mod+Ctrl+9".action = move-column-to-workspace 9;
 
         "Mod+BracketLeft".action = consume-or-expel-window-left;
         "Mod+BracketRight".action = consume-or-expel-window-right;
-
-        "Mod+Comma".action = consume-window-into-column;
-        "Mod+Period".action = expel-window-from-column;
 
         "Mod+R".action = switch-preset-column-width;
         "Mod+Shift+R".action = expand-column-to-available-width;
@@ -189,12 +194,12 @@ in {
         "Mod+Space".action = switch-layout "next";
         "Mod+Shift+Space".action = switch-layout "prev";
 
-        # "Print".action = screenshot-screen { write-to-disk = false; };
+        "Print".action = screenshot-screen { write-to-disk = false; show-pointer = false; };
         "Shift+Print".action = screenshot { write-to-disk = false; show-pointer = false; };
         "Ctrl+Print".action = screenshot-window { write-to-disk = false; };
-        # "Mod+Print".action = screenshot-screen;
-        "Mod+Shift+Print".action = screenshot { show-pointer = false; };
-        "Mod+Ctrl+Print".action = screenshot-window;
+        "Mod+Print".action = screenshot-screen { show-pointer = false; write-to-disk = true; };
+        "Mod+Shift+Print".action = screenshot { show-pointer = false; write-to-disk = true; };
+        "Mod+Ctrl+Print".action = screenshot-window { write-to-disk = true; };
 
         "Mod+Escape".action = toggle-keyboard-shortcuts-inhibit; # { allow-inhibiting = false; };
 
